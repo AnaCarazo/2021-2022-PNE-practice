@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # -- Constant with the new of the file to open
-FILENAME = "FRAT1.txt"
+FILENAME = "../P0/seq_dna/FRAT1.txt"
 
 # -- Open and read the file
 file_contents = Path(FILENAME).read_text()
