@@ -55,4 +55,4 @@ def most_frecuent_base(seq):
     dict_list = dict(zip(list_basis, list_count))
     import operator
     dict_list_sorted_by_apparences = sorted(dict_list.items(), key=operator.itemgetter(1), reverse=True)
-    return dict_list_sorted_by_apparences[0][1]
+    return dict_list_sorted_by_apparences[0][0]
