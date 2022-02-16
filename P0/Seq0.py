@@ -15,3 +15,9 @@ def seq_read_fasta(filename):
         seq = open("./seq_dna/" + filename, "r").read()
         seq = seq[seq.find("\n") + 1:].replace("\n")
         return seq
+
+def seq_count(seq):
+    list_count = [seq.count("A"), seq.count("C"), seq.count("T"), seq.count("G")]
+    list_basis = ["A", "C", "T", "G"]
+    dict_list = dict(zip(list_basis, list_count))
+    return dict_list
