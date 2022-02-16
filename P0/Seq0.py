@@ -12,8 +12,8 @@ def valid_filename():
         except FileNotFoundError:
             print("This file does not exist.")
 def seq_read_fasta(filename):
-        seq = open("./seq_dna/" + filename, "r").read()
-        seq = seq[seq.find("\n") + 1:].replace("\n")
+        seq = open("./seq_dna/" + filename + ".txt", "r").read()
+        seq = seq[seq.find("\n") + 1:].replace("\n", "")
         return seq
 
 def seq_count(seq):
