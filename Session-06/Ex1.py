@@ -2,7 +2,6 @@ class Seq:
     """A class for representing sequences"""
 
     def __init__(self, strbases): #we do not need to return anything in this function
-
         # Initialize the sequence with the value
         # passed as argument when creating the object
         self.strbases = strbases
@@ -11,8 +10,6 @@ class Seq:
             print("ERROR!!")
         else:
             print("New sequence created!")
-
-        print("New sequence created!")
 
     #esta función se puede usar antes of instanciating a class, así nos podemos asegurar de que lo que instanciamos es una valid sequence
     @staticmethod #this function spects a normal argument, not self, por tanto dentro de la función tmb cambiamos eso
@@ -38,10 +35,13 @@ class Seq:
 
     def __str__(self): # si no  ponemos esto se imprime cómo está guardado en la memoria, pero no como un string
         """Method called when the object is being printed"""
-
         # -- We just return the string with the sequence
         return self.strbases
 
     def len(self):
         """Calculate the length of the sequence"""
         return len(self.strbases)
+
+#Main program
+s1 = Seq("AGTACACTGGT")
+s2 = Seq("CGTAAFFF")
