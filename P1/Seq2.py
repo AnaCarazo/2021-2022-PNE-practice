@@ -1,7 +1,7 @@
 class Seq:
     """A class for representing sequences"""
 
-    def __init__(self, strbases): #we do not need to return anything in this function
+    def __init__(self, strbases="NULL"): #If no argument is given, python automatically will create one with the default value to "NULL"
         # Initialize the sequence with the value
         # passed as argument when creating the object
         self.strbases = strbases
