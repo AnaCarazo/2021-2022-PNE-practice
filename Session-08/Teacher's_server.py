@@ -1,8 +1,8 @@
 import socket #we want to create a server
 
 # Configure the Server's IP and PORT
-PORT = 8081
-IP = "212.128.253.84" #IP adress in the computers of the labs, si no pongo el ip adress de mi computer no va a funcionar
+PORT = 21000
+IP = "0.0.0.0" #IP adress in the computers of the labs, si no pongo el ip adress de mi computer no va a funcionar
 MAX_OPEN_REQUESTS = 5
 
 # Counting the number of connections
@@ -29,7 +29,7 @@ try:
         print("CONNECTION: {}. From the IP: {}".format(number_con, address))
 
         # Read the message from the client, if any
-        msg = clientsocket.recv(2048).decode("utf-8") #recv(2048) con estop lo que decimos es q estamos listos para recibir información y la vamos a almacenar en 2048 bites y luego esta informacion la transformamos en un string: .decode("utf-8")
+        msg = clientsocket.recv(2048).decode("utf-8") #recv(2048) con esto lo que decimos es q estamos listos para recibir información y la vamos a almacenar en 2048 bites y luego esta informacion la transformamos en un string: .decode("utf-8")
         print("Message from client: {}".format(msg))
 
         # Send the messag
@@ -38,7 +38,7 @@ try:
         # We must write bytes, not a string
         clientsocket.send(send_bytes)
         clientsocket.close() #when i close the socket el server deja de procesar la información que le llega del cliente, se cierra la comunicaación
-
+        #if I don not close the socket, puede estar bloqueando un server
 except socket.error:
     print("Problems using port {}. Do you have permission?".format(PORT))
 
