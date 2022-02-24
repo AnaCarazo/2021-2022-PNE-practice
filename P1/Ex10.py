@@ -1,6 +1,6 @@
 #TypeError: seq_read_fasta() takes 1 positional argument but 2 were given
 from Seq1 import Seq
-list_seq = ["U5", "ADA", "FRAT1", "FXN"]
+list_seq = ["U5", "ADA", "FRAT1", "FXN", "RNU6_269P"]
 for l in list_seq:
     s = Seq()
     s.seq_read_fasta(l)
