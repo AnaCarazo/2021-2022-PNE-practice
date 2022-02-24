@@ -9,14 +9,7 @@ s2 = Seq("ACTGA")
 s3 = Seq("Invalid sequence")
 
 list_s = [s1, s2, s3]
-#print(list_s)
-list_num = []
-for i in range(1, len(list_s) + 1):
-    list_num.append(i)
-#print(list_num)
 
-zipped_list = zip(list_s, list_num)
-
-for s, n in zipped_list:
-    dict_list = s.count()
-    print("Sequence", n, ": (Lenght:", s.len(),")", s, "\nBases:", dict_list)
+for i in range(0, len(list_s)):
+    dict_list = list_s[i].count()
+    print("Sequence " + str(i + 1) + ": (Length:", str(list_s[i].len()) + ")", list_s[i], "\nBases:", dict_list)

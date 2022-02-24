@@ -6,10 +6,7 @@ s2 = Seq("ACTGA")
 # -- Create an invalid sequence
 s3 = Seq("Invalid sequence")
 
-list_seq = [s1, s2, s3]
-list_num = []
-for i in range(1, len(list_seq) + 1):
-    list_num.append(i)
-zipped = zip(list_num, list_seq)
-for s, n in zipped:
-    print("Sequence", n, ":", s)
+list_s = [s1, s2, s3]
+
+for i in range(0, len(list_s)):
+    print("Sequence " + str(i + 1) + ":", list_s[i])

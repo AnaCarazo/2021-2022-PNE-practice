@@ -1,8 +1,6 @@
-#TypeError: 'Seq' object is not subscriptable
 from Seq1 import Seq
 # -- Create a Null sequence
 s = Seq()
-
 # -- Initialize the null seq with the given file in fasta format
 s.seq_read_fasta("U5")
 dict_list = s.count()

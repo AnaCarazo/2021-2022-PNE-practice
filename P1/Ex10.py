@@ -3,6 +3,5 @@ from Seq1 import Seq
 list_seq = ["U5", "ADA", "FRAT1", "FXN"]
 for l in list_seq:
     s = Seq()
-    seq = s.seq_read_fasta(l)
-    base = seq.most_frecuent_base()
-    print("Gene", l + ":", "Most frequent Base:", base)
+    s.seq_read_fasta(l)
+    print("Gene", l + ":", "Most frequent Base:", s.most_frecuent_base())
