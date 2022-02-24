@@ -1,4 +1,4 @@
-#TypeError: seq_read_fasta() takes 1 positional argument but 2 were given
+#TypeError: 'Seq' object is not subscriptable
 from Seq1 import Seq
 # -- Create a Null sequence
 s = Seq()
