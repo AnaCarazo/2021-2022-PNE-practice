@@ -12,7 +12,7 @@ IP = "10.3.46.157" #"212.128.253.64" #necesitamos el IP en el que el server is r
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # establish the connection to the Server (IP, PORT)
-s.connect((IP, PORT))
+s.connect((IP, PORT)) #esto es un tupla, es un solo argumento, por eso ponemos dos paréntesis
 
 # Send data. No strings can be send, only bytes
 # It necesary to encode the string into bytes
