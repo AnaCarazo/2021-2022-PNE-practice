@@ -3,8 +3,8 @@ import socket
 # SERVER IP, PORT
 # Write here the correct parameter for connecting to the
 # Teacher's server
-PORT = 8000
-IP = "10.3.46.157" #"212.128.253.64" #necesitamos el IP en el que el server is running, cambia de oredenador a ordenador
+PORT = 8080
+IP = "localhost" #"212.128.253.64" #necesitamos el IP en el que el server is running, cambia de oredenador a ordenador
 
 
 # First, create the socket

@@ -10,12 +10,12 @@ MAX_OPEN_REQUESTS = 5
 number_con = 0
 
 # create an INET, STREAMing socket
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #we are creating an object of class socket, with two attributes
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #we are creating an object of class socket, with two attributes, que vamos a usar para escuchar
 try:
-    serversocket.bind((IP, PORT)) #specify the adress
+    serversocket.bind((IP, PORT)) #specify the adress of the server (IP: where the server is running, PORT: where it is listening to)
     # become a server socket
     # MAX_OPEN_REQUESTS connect requests before refusing outside connections
-    serversocket.listen(MAX_OPEN_REQUESTS)
+    serversocket.listen(MAX_OPEN_REQUESTS) #how many clients at the same time we want to allow to attend, if you don't specify, el operative sistem te determina cuántos puede handle, en linux suelen ser 10, en windows 15...
 
     while True:
         # accept connections from outside
@@ -31,6 +31,7 @@ try:
 
         # Read the message from the client, if any
         msg = clientsocket.recv(2048).decode("utf-8") #recv(2048) con esto lo que decimos es q estamos listos para recibir información y la vamos a almacenar en 2048 bites y luego esta informacion la transformamos en un string: .decode("utf-8")
+        #this clientsocket is specific to this client, porque yo me puedo cumunicar con más clients
         print("Message from client: {}".format(msg))
 
         # Send the messag
