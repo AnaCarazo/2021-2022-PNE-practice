@@ -1,5 +1,5 @@
 import socket
-
+from Seq1 import Seq
 # -- Step 1: create the socket
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -57,30 +57,34 @@ while True:
             print("PING COMMAND")
 
         elif command == "GET":
-            list_seqs = ["ACTGACTG, CCAACCTTGG, GGAACCTTGGCCAATT, TGCATGCA, AACCTTGG"]
-            print(list_seqs[int(argument)])
+            try:
+                list_seqs = ["ACTGACTG", "CCAACCTTGG", "GGAACCTTGGCCAATT", "TGCATGCA", "AACCTTGG"]
+                print(argument)
+                response = list_seqs[int(argument)] + "\n"
+            except ValueError:
+                response = "The argument for the GET command must be a number from 0 to 4.\n"
+            except IndexError:
+                response = "The argument for the GET command must be a number from 0 to 4.\n"
 
         elif command == "INFO":
             from Seq1 import Seq
             sequence = Seq(argument)
             list_basis = ["A", "C", "T", "G"]
-            print("Sequence:", sequence.__str__(), "\nTotal length:", sequence.len(), "\n", str(list_basis[0]) + ":", sequence.count_base()[0], "(" + (sequence.count_base()[0]) * 100 / sequence.len(), ")", "\n", str(list_basis[1]) + ":", sequence.count_base()[1], "(" + (sequence.count_base()[1]) * 100 / sequence.len(), ")", "\n", str(list_basis[2]) + ":", sequence.count_base()[2], "(" + (sequence.count_base()[2]) * 100 / sequence.len(), ")", "\n", str(list_basis[3]) + ":", sequence.count_base()[3], "(" + (sequence.count_base()[3]) * 100 / sequence.len(), ")"
+            response = "Sequence:", sequence.__str__(), "\nTotal length:", sequence.len(), "\n", str(list_basis[0]) + ":", str(sequence.count_base()[0]), "(" + str((sequence.count_base()[0]) * 100 / sequence.len()), ")", "\n", str(list_basis[1]) + ":", str(sequence.count_base()[1]), "(" + str((sequence.count_base()[1]) * 100 / sequence.len()), ")", "\n", str(list_basis[2]) + ":", str(sequence.count_base()[2]), "(" + str((sequence.count_base()[2]) * 100 / sequence.len()), ")", "\n", str(list_basis[3]) + ":", str(sequence.count_base()[3]), "(" + str((sequence.count_base()[3]) * 100 / sequence.len()), ")\n"
 
         elif command == "COMP":
-            from Seq1 import Seq
             sequence = Seq(argument)
-            print(sequence.complementary_seq())
+            response = sequence.complementary_seq() + "\n"
 
         elif command == "REV":
-            from Seq1 import Seq
             sequence = Seq(argument)
-            print(sequence.seq_reverse())
+            response = sequence.seq_reverse() + "\n"
+
         elif command == "GENE":
-            from Seq1 import Seq
             # -- Create a Null sequence
             s = Seq()
             # -- Initialize the null seq with the given file in fasta format
-            print(s.seq_read_fasta(argument))
+            response = s.seq_read_fasta(argument) + "\n"
 
         else:
             response = "This command is not available in the server\n"
