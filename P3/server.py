@@ -48,7 +48,7 @@ while True:
         print(command)
         if command != "PING":
             argument = splitted_command[1]
-        print(command)
+        #print(command)
         print(f"Message received: {msg}")
 
 #poner lo del mensaje en color verde, con lo de colorama
@@ -59,7 +59,7 @@ while True:
         elif command == "GET":
             try:
                 list_seqs = ["ACTGACTG", "CCAACCTTGG", "GGAACCTTGGCCAATT", "TGCATGCA", "AACCTTGG"]
-                print(argument)
+                #print(argument)
                 response = list_seqs[int(argument)] + "\n"
             except ValueError:
                 response = "The argument for the GET command must be a number from 0 to 4.\n"
@@ -84,7 +84,8 @@ while True:
             # -- Create a Null sequence
             s = Seq()
             # -- Initialize the null seq with the given file in fasta format
-            response = s.seq_read_fasta(argument) + "\n"
+            s.seq_read_fasta(argument)
+            response = str(s) + "\n"
 
         else:
             response = "This command is not available in the server\n"
