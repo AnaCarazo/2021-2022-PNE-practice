@@ -107,3 +107,15 @@ class Seq:
         #import operator
         #dict_list_sorted_by_apparences = sorted(dict_list.items(), key=operator.itemgetter(1), reverse=True)
         #return dict_list_sorted_by_apparences[0][0]
+
+#----Ex7 apartado INFO, practice 3-----
+    def bases_and_percentages(self):
+        d = {"A" : 0, "C" : 0, "T" : 0, "G" : 0}
+        for b in self.strbases:
+            d[b] += 1
+
+        total = sum(d.values())
+        for k,v in d.items():
+            d[k] = [v, round(((v * 100) / total), 1)]
+        return d
+

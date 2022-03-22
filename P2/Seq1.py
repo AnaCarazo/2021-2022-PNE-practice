@@ -111,3 +111,5 @@ class Seq:
 # ----Ex6, practice 2-----
     def frag_10bases(self, n1, n2):
         return self.strbases[int(n1) * 10: int(n2) * 10]
+
+
