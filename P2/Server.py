@@ -1,7 +1,7 @@
 import socket #we want to create a server
 
 # Configure the Server's IP and PORT
-PORT = 20000
+PORT = 8080
 IP = "127.0.0.1" #IP adress in the computers of the labs, si no pongo el ip adress de mi computer no va a funcionar
 #if i have no IP adress, solo esto: IP = "", es que estamos abiertos a todas las conexiones, si el client pone localhost va a funcionar la conexión (creo que en realidad va a funcionar ponga lo que ponga el client)
 MAX_OPEN_REQUESTS = 5
