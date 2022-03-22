@@ -37,6 +37,6 @@ for i in range(0, 10):
     n2 = n2 + 1
 
 for i in range(0, 10, 2):
-    resp = c1.talk(f"Fragment : {list_frags[i]}")
+    resp = c1.talk(f"Fragment {i + 1}: {list_frags[i]}")
 for i in range(1, 10, 2):
-    resp = c2.talk(f"Fragment : {list_frags[i]}")
+    resp = c2.talk(f"Fragment {i + 1}: {list_frags[i]}")
