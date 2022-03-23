@@ -95,6 +95,23 @@ while True:
             s.seq_read_fasta(argument)
             response = str(s)
 
+        elif command == "ADD":
+            sequence = Seq(argument)
+            if sequence.valid_sequence():
+                list_values = []
+                for b in argument:
+                    if b == "A":
+                        list_values.append(3)
+                    elif b == "C":
+                        list_values.append(-2)
+                    elif b == "G":
+                        list_values.append(4)
+                    else:
+                        list_values.append(6)
+                response = "The sum is: " + str(sum(list_values)) + "\n"
+            else:
+                response = "We could not sum the bases since the sequence is not correct."
+
         else:
             response = "This command is not available in the server\n"
 
