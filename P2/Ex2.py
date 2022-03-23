@@ -15,4 +15,4 @@ c = Client(IP, PORT)
 # -- Test the ping method
 c.ping()
 print(c)
-
+#No real connection has been established yet. It just prints the IP and port of the Client object

@@ -36,7 +36,7 @@ for i in range(0, 10):
     n1 = n1 + 1
     n2 = n2 + 1
 
-for i in range(0, 10, 2):
+for i in range(0, 10, 2): #los impares, xq list_frags[0] es el primer elemento, list_frags[2] es el tercer elemento de la lista...
     resp = c1.talk(f"Fragment {i + 1}: {list_frags[i]}")
-for i in range(1, 10, 2):
+for i in range(1, 10, 2): #los pares
     resp = c2.talk(f"Fragment {i + 1}: {list_frags[i]}")
