@@ -1,63 +1,65 @@
+from Seq0 import *
+
+#-----Ex1-----
 def seq_ping():
     print("OK")
 
+#-----Ex2-----
 def valid_filename():
     exit = False
     while not exit:
         filename = input("Enter the name of a file: ")
         try:
-            f = open("./seq_dna/" + filename, "r")
+            f = open("./seq_dna/" + filename + ".txt", "r")
             exit = True
             return filename
         except FileNotFoundError:
             print("This file does not exist.")
 
+#-----Ex2-----
 def seq_read_fasta(filename):
         seq = open("./seq_dna/" + filename + ".txt", "r").read()
         seq = seq[seq.find("\n") + 1:].replace("\n", "")
         return seq
 
+#-----Ex3-----
 def seq_len(seq):
     l = len(seq)
     return l
 
+#-----Ex4-----
+def seq_count_base(seq, base):
+    c = seq.count(base)
+    return c
+
+#-----Ex5-----
 def seq_count(seq):
     list_count = [seq.count("A"), seq.count("C"), seq.count("T"), seq.count("G")]
     list_basis = ["A", "C", "T", "G"]
     dict_list = dict(zip(list_basis, list_count))
     return dict_list
 
-def seq_count_base(seq, A):
-    c = seq.count(A)
-    return c
-
+#-----Ex6-----
 def seq_reverse(seq):
-    frag = seq[:20]
+    frag = seq
     reverse = frag[::-1]
     return frag, reverse
 
+#-----Ex7-----
 def complementary_seq(seq):
-    list_seq = []
+    complementary = ""
     for c in seq:
-        list_seq.append(c)
-    i = 0
-    cont_loop = True
-    while cont_loop and i < len(list_seq):
-        if list_seq[i] == "A":
-            list_seq[i] = "T"
-            i = i + 1
-        elif list_seq[i] == "T":
-            list_seq[i] = "A"
-            i = i + 1
-        elif list_seq[i] == "C":
-            list_seq[i] = "G"
-            i = i + 1
+        if c == "A":
+            complementary += "T"
+        elif c == "T":
+            complementary += "A"
+        elif c == "C":
+            complementary += "G"
         else:
-            list_seq[i] = "C"
-            i = i + 1
-    complementary = "".join(list_seq)
+            complementary += "C"
     return complementary
 
+#-----Ex8-----
 def most_frecuent_base(seq):
     list_count = [seq.count("A"), seq.count("C"), seq.count("T"), seq.count("G")]
     list_basis = ["A", "C", "T", "G"]

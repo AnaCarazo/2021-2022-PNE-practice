@@ -25,7 +25,7 @@ s1 = Seq("AGTACACTGGT")
 s2 = Seq("CGTAAC")
 
 # -- Printing the objects
-print(f"Sequence 1: {s1}")
+print(f"Sequence 1: {s1}") #cuando queremos imprimir un objero, la __str__ function is called automatically
 print(f"  Length: {s1.len()}")
 #print("  Length:", s1.len()) esta es la forma que hemos usado siempre
 print(f"Sequence 2: {s2}")
