@@ -1,3 +1,4 @@
+#For accessing to the functions defined in the Seq0 module, you should write this line in the beginning of your programs:
 from Seq0 import *
 #puedo poner arriba: import Seq0, como he hecho antes, o poner lo que he puesto ahora
 #que con eso no hace falta poner el nombre del módulo + . delante de la función e ese módulo

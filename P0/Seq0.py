@@ -1,5 +1,3 @@
-from Seq0 import *
-
 #-----Ex1-----
 def seq_ping():
     print("OK")

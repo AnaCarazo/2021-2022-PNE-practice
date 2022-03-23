@@ -1,10 +1,8 @@
 class Seq:
-    """A class for representing sequences"""
-
+#-----Ex1,2,3-----
     def __init__(self, strbases="NULL"):
-
-        # Initialize the sequence with the value
-        # passed as argument when creating the object
+    #It is used in python for creating optional arguments. If no argument is given, python automatically will create one with the default value to "NULL". This is the value we will use to identify the null sequences
+    #When a Null sequence is created, the __init()__ method will print the message: "NULL Seq Created"
         self.strbases = strbases
         if self.strbases == "NULL":
             print("NULL Seq created")

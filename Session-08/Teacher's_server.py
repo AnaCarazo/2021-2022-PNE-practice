@@ -1,6 +1,4 @@
-import socket #we want to create a server
-
-# Configure the Server's IP and PORT
+import socket
 IP = "127.0.0.1"
 PORT = 8080
 #IP adress in the computers of the labs, si no pongo el ip adress de mi computer no va a funcionar
@@ -35,7 +33,7 @@ try:
         print("Message from client: {}".format(msg))
 
         # Send the messag
-        message = "Hello from the teacher's server" #this string can be sent back to the client
+        message = input("Please enter a message: ") #this string can be sent back to the client
         send_bytes = str.encode(message) #pero en el socket no podemos escribir directamente strings, hay que hacer una conversion--> encoding the string : .encode(message), y cuando quieras leer la info haces la conversión al revés, de bites a string
         # We must write bytes, not a string
         clientsocket.send(send_bytes)

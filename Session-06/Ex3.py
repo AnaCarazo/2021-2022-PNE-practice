@@ -59,6 +59,7 @@ class Gene(Seq):
         """Print the Gene name along with the sequence"""
         return self.name + "-" + self.strbases
 
+    @staticmethod
     def generate_seqs(pattern, number):
         list_seqs = []
         for i in range(0, number):
@@ -69,12 +70,11 @@ class Gene(Seq):
 
 
 #main program
-seq_list1 = generate_seqs("A", 3)
-seq_list2 = generate_seqs("AC", 5)
+seq_list1 = Seq.generate_seqs("A", 3)
+seq_list2 = Seq.generate_seqs("AC", 5)
 
 print("List 1:")
-print_seqs("Sequence", n, ":", s, ", Lenght:", s.len())
-
+Seq.print_seqs(seq_list1)
 print()
 print("List 2:")
-print_seqs(seq_list2)
+Seq.print_seqs(seq_list2)
