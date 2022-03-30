@@ -19,7 +19,7 @@ def process_client(s):
 
     # -- The request line is the first
     req_line = lines[0]
-
+    print(req_line)
     print("Request line: ", end="")
     termcolor.cprint(req_line, "green")
 
@@ -30,31 +30,30 @@ def process_client(s):
     # blank line
     # Body (content to send)
 
-    # This new contents are written in HTML language
-    body = """
-    <!DOCTYPE html>
-    <html lang="en" dir="ltr">
-      <head>
-        <meta charset="utf-8">
-        <title>Green server</title>
-      </head>
-      <body style="background-color: lightgreen;">
-        <h1>GREEN SERVER</h1>
-        <p>I am the Green Server! :-)</p>
-      </body>
-    </html>
-    """
+    route = req_line.split(" ")[1]
+    print("The route is:", route)
+
+    if route == "/":
+        # This new contents are written in HTML language
+        f = open("html/index.html", "r").read()
+    elif route == "/goodbye":
+        print("Entering into the goodbye file")
+        f = open("html/goodbye.html", "r").read()
+    elif route == "/question":
+        f = open("html/question.html", "r").read()
+
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 
     # -- Add the Content-Type header
+    #Instead of responding with a string, we will send a message in HTML. It is important to change the Content-type header from text/plain to text/html for indicating that we are sending HTML code instead of plain text
     header = "Content-Type: text/html\n"
 
     # -- Add the Content-Length
-    header += f"Content-Length: {len(body)}\n"
+    header += f"Content-Length: {len(f)}\n"
 
     # -- Build the message by joining together all the parts
-    response_msg = status_line + header + "\n" + body
+    response_msg = status_line + header + "\n" + f
     cs.send(response_msg.encode())
 
 
