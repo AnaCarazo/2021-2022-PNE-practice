@@ -31,13 +31,28 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
 
         # Message to send back to the clinet
-        contents = "I am the happy server! :-)"
+        if self.path == "/":
+            contents = open("info/index.html", "r").read()
+        elif self.path == "/info/A.html":
+            contents = open("info/A.html", "r").read()
+        elif self.path == "/info/C.html":
+            contents = open("info/C.html", "r").read()
+        elif self.path == "/info/G.html":
+            contents = open("info/G.html", "r").read()
+        elif self.path == "/info/T.html":
+            contents = open("info/T.html", "r").read()
+        else:
+            try:
+                #comprobar con el uracilo: http://127.0.0.1:8080/info/U.html
+                contents = open(self.path[1:], "r").read() #cogemos el self.path a partir del index 1 xq el primer "/" no lo queremos, ya que no forma parte del nombre del fichero
+            except FileNotFoundError:
+                contents = open("info/error.html", "r").read()
 
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
         # Define the content-type header:
-        self.send_header('Content-Type', 'text/plain')
+        self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(contents.encode()))
 
         # The header is finished
