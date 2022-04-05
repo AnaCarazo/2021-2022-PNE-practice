@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>FORM 2</title>
+  </head>
+  <body>
+    <h3>Example of different input elements</h3>
+
+    <form action="myserver" method="get">
+      Text input  <input type="text" name="msg">
+      <br><br>
+      Check button:
+      <input type="checkbox" name="chk"> <!-- to create a check button -->
+      <!-- tmb puedes añadir tú un value, pero by default, si no pones nada envía: on -->
+      <br><br>
+      Radio buttons:
+      <input type="radio" name="base" value="A" checked> A <!-- como pone: checked, by defaul nos va a salir A marcado-->
+      <input type="radio" name="base" value="C"> C <!-- lo que está fuera de <input type="radio" name="base" value="C"> es el nombre del botón -->
+      <input type="radio" name="base" value="T"> T
+      <input type="radio" name="base" value="G"> G
+      <!-- notice that because this are radio buttons, you name them all the same because yoy can only select one, so only one of the above are going to be sent-->
+      <br><br>
+      Options: <br>
+      Choose operation:
+      <select name="operation">
+        <option value="count">Count</option>
+        <option value="perc">Percentage</option>
+      </select>
+       <br>
+        <input type="submit"/>
+    </form>
+
+  </body>
+</html>
+
