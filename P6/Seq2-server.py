@@ -19,12 +19,23 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         """This method is called whenever the client invokes the GET method
         in the HTTP protocol request"""
 
+        list_seq = ["ACTG", "AACCTTGG", "AAACCCTTTGGG", "GTCA", "GGCCTTAA"]
+
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
 
         # Open the form1.html file
         # Read the index from the file
-        contents = Path('form-2.html').read_text()
+        if self.path == "/":
+            contents = Path('form-1.html').read_text()
+        elif self.path == "/ping?":
+            contents = Path('PING.html').read_text()
+        elif self.path.startswith("/get?"):
+            n = int(self.path.split("?n=")[1])
+            sequence = list_seq[n]
+            contents = Path('get.html').read_text().format(n=n, sequence=sequence)
+        else:
+            contents = Path('Error.html').read_text()
 
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
