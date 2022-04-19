@@ -16,7 +16,7 @@
       <br><br>
       Radio buttons:
       <input type="radio" name="base" value="A" checked> A <!-- como pone: checked, by defaul nos va a salir A marcado-->
-      <input type="radio" name="base" value="C"> C <!-- lo que está fuera de <input type="radio" name="base" value="C"> es el nombre del botón -->
+      <input type="radio" name="base" value="C"> C <!-- lo que está fuera de <input type="radio" name="base" value="C"> es el nombre del botón, mientras que el: value="C" es lo que se va a incorporar a la URL-->
       <input type="radio" name="base" value="T"> T
       <input type="radio" name="base" value="G"> G
       <!-- notice that because this are radio buttons, you name them all the same because yoy can only select one, so only one of the above are going to be sent-->
@@ -33,4 +33,6 @@
 
   </body>
 </html>
-
+#parse_qs()
+#sirve para hacer una lista con las partes de una URL.
+#para no tener que estar usando todo el rato la split functión para acceder a las zonas de la URL que necesite.

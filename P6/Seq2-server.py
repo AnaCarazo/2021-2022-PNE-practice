@@ -2,6 +2,8 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
+from urlib.parse import urlparse, parse_qs
+from jinja2 import Template
 
 # Define the Server's port
 PORT = 8080
@@ -35,12 +37,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif self.path.startswith("/get?"):
             n = int(self.path.split("?n=")[1])
             sequence = list_seq[n]
-            contents = Path('get.html').read_text().format(n=n, sequence=sequence)
+            print(n, sequence)
+            contents = Path('get.html').read_text().format(n, sequence)
         #GENE
         elif self.path.startswith("/gene?"):
-            name = self.path.split("?n=")[1]
-            gene_seq = Path("seq_dna/" + name + ".txt").read_text()
-            contents = Path('gene.html').read_text().format(name=name, gene_seq=gene_seq)
+            name = self.path.split("?name=")[1]
+            #esto se podría hacer con la read_fasta function
+            gene_seq = open("./seq_dna/" + name + ".txt", "r").read()
+            gene_seq = gene_seq[gene_seq.find("\n") + 1:].replace("\n", "")
+            contents = Path('gene.html').read_text().format(name, gene_seq)
         #OPERATION
         # http://localhost:63342/operation?seq=AACC&operation=Info
         elif self.path.startswith("/operation?"):
@@ -69,11 +74,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                             result = result + "C"
             elif operation == "Rev":
                 result = seq[::-1]
-        contents = Path('operation.html').read_text().format(seq=seq, operation=operation, result=result)
-
+            contents = Path('operation.html').read_text().format(seq=seq, operation=operation, result=result)
         else:
             contents = Path('Error.html').read_text()
-
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
