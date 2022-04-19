@@ -34,6 +34,38 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             n = int(self.path.split("?n=")[1])
             sequence = list_seq[n]
             contents = Path('get.html').read_text().format(n=n, sequence=sequence)
+        elif self.path.startswith("/gene?"):
+            name = self.path.split("?n=")[1]
+            gene_seq = Path("seq_dna/" + name + ".txt").read_text()
+            contents = Path('gene.html').read_text().format(name=name, gene_seq=gene_seq)
+        # http://localhost:63342/operation?seq=AACC&operation=Info
+        elif self.path.startswith("/operation?"):
+            try:
+                seq = self.path.split("?seq=")[1].split("&")[0]
+                #validar la sequancia con una función que comproeve que es correcta
+                operation = self.path.split("&operation=")[1]
+                if operation == "Info":
+                    pass
+                    #result = #seq.info() hay que llamar a las correspondientes funciones
+                             #pero dnd están estas funciones? Esto ya está dentro de una clase
+                elif operation == "Comp":
+                    result = ""
+                    for b in seq:
+                        if b == "A":
+                            result = result + "T"
+                        elif b == "T":
+                            result = result + "A"
+                        elif b == "C":
+                            result = result + "G"
+                        else:
+                            if b == "G":
+                                result = result + "C"
+                elif operation == "Rev":
+                    result = seq[::-1]
+            except:
+                contents = Path('Error.html').read_text()
+
+            contents = Path('operation.html').read_text().format(seq=seq, operation=operation, result=result)
         else:
             contents = Path('Error.html').read_text()
 

@@ -24,5 +24,31 @@
       </select>
       <input type="submit" value="GET"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
     </form>
+    <hr>
+    <form action="/gene" method="gene">
+      Get a Gene. Select the name:
+      <select name="name">
+        <option value="U5">U5</option>
+        <option value="ADA">ADA</option>
+        <option value="FRAT1">FRAT1</option>
+        <option value="RNU6_269P">RNU6_269P</option>
+        <option value="FXN">FXN</option>
+      </select>
+      <input type="submit" value="GENE"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
+    </form>
+    <hr>
+    <form action="/operation" method="operation">
+      Write a sequence:
+      <input type="text" name="seq">
+      <br>
+      Select an operation:
+      <input type="radio" name="operation" value="Info" checked> Info <!-- como pone: checked, by defaul nos va a salir Info marcado-->
+      <input type="radio" name="operation" value="Comp"> Comp
+      <input type="radio" name="operation" value="Rev"> Rev
+      </select>
+      <br>
+      Perform operator:
+      <input type="submit" value="OPERATE!"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
+    </form>
   </body>
 </html>
