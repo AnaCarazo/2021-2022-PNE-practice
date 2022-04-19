@@ -28,18 +28,22 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Read the index from the file
         if self.path == "/":
             contents = Path('form-1.html').read_text()
+        #PING
         elif self.path == "/ping?":
             contents = Path('PING.html').read_text()
+        #GET
         elif self.path.startswith("/get?"):
             n = int(self.path.split("?n=")[1])
             sequence = list_seq[n]
             contents = Path('get.html').read_text().format(n=n, sequence=sequence)
+        #GENE
         elif self.path.startswith("/gene?"):
             name = self.path.split("?n=")[1]
             gene_seq = Path("seq_dna/" + name + ".txt").read_text()
             contents = Path('gene.html').read_text().format(name=name, gene_seq=gene_seq)
-        # http://localhost:63342/operation?seq=AACC&operation=Info
+        #OPERATION
         elif self.path.startswith("/operation?"):
+            # http://localhost:63342/operation?seq=AACC&operation=Info
             try:
                 seq = self.path.split("?seq=")[1].split("&")[0]
                 #validar la sequancia con una función que comproeve que es correcta
