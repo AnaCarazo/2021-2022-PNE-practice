@@ -2,8 +2,9 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
-from urlib.parse import urlparse, parse_qs
-from jinja2 import Template
+#estos dos módulos son mejores opciones para desarollar la práctica
+#from urllib.parse import urlparse, parse_qs
+#from jinja2 import Template
 
 # Define the Server's port
 PORT = 8080
