@@ -2,6 +2,7 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
+import Seq0
 #estos dos módulos son mejores opciones para desarollar la práctica
 #from urllib.parse import urlparse, parse_qs
 #from jinja2 import Template
@@ -30,7 +31,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/":
-            contents = Path('form-1.html').read_text()
+            contents = Path('index.html').read_text()
         #PING
         elif self.path == "/ping?":
             contents = Path('PING.html').read_text()
@@ -57,22 +58,16 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             #                                                                         contents = Path('invalid_seq.html').read_text()
             operation = self.path.split("&operation=")[1]
             if operation == "Info":
-                pass
-                #result = #seq.info() hay que llamar a las correspondientes funciones
-                         #pero dnd están estas funciones? Esto ya está dentro de una clase
+                list_basis = ["A", "C", "T", "G"]
+                length = f"Total length: {len(seq)}"
+                d = Seq0.bases_and_percentages(seq)
+                list_values = list(d.values())
+                result = length
+                for i in range(0, 4):
+                    result = result + f"'<br>'{list_basis[i]}: {list_values[i][0]} ({list_values[i][1]}%)"
             elif operation == "Comp":
                 #poner en una función
-                result = ""
-                for b in seq:
-                    if b == "A":
-                        result = result + "T"
-                    elif b == "T":
-                        result = result + "A"
-                    elif b == "C":
-                        result = result + "G"
-                    else:
-                        if b == "G":
-                            result = result + "C"
+                result = Seq0.complementary_seq(seq)
             elif operation == "Rev":
                 result = seq[::-1]
             contents = Path('operation.html').read_text().format(seq=seq, operation=operation, result=result)

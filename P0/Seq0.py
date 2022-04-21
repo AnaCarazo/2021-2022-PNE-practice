@@ -65,3 +65,14 @@ def most_frecuent_base(seq):
     import operator
     dict_list_sorted_by_apparences = sorted(dict_list.items(), key=operator.itemgetter(1), reverse=True)
     return dict_list_sorted_by_apparences[0][0]
+
+#----para la práctica 6, meto esta función en este file que voy a importar-----
+def bases_and_percentages(seq):
+    d = {"A" : 0, "C" : 0, "T" : 0, "G" : 0}
+    for b in seq:
+        d[b] += 1
+
+    total = sum(d.values())
+    for k,v in d.items():
+        d[k] = [v, round(((v * 100) / total), 1)]
+    return d
