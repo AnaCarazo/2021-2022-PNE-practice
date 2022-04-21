@@ -66,7 +66,7 @@ def most_frecuent_base(seq):
     dict_list_sorted_by_apparences = sorted(dict_list.items(), key=operator.itemgetter(1), reverse=True)
     return dict_list_sorted_by_apparences[0][0]
 
-#----para la práctica 6, meto esta función en este file que voy a importar-----
+#----para la práctica 6, meto estas funciones en Seq0 que voy a usar-----
 def bases_and_percentages(seq):
     d = {"A" : 0, "C" : 0, "T" : 0, "G" : 0}
     for b in seq:
@@ -76,3 +76,13 @@ def bases_and_percentages(seq):
     for k,v in d.items():
         d[k] = [v, round(((v * 100) / total), 1)]
     return d
+
+def valid_sequence(seq):
+    valid = True
+    i = 0
+    while i < len(seq) and valid:
+        c = seq[i]
+        if c != "A" and c != "C" and c != "G" and c != "T":
+            valid = False
+        i += 1
+    return valid
