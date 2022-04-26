@@ -1,0 +1,2 @@
+in jason files the keys are only allowed to be strings and no spaces are supported
+para los values puede ser cualquier cosa, incluso an array (que es como otro json file más pequeñito dentro)
