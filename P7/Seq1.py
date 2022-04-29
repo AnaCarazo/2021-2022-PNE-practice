@@ -103,7 +103,6 @@ class Seq:
         max_base = max(list_count)
         index_base = list_count.index(max_base)
         return list_basis[index_base]
-
         #dict_list = dict(zip(list_basis, list_count))
         #import operator
         #dict_list_sorted_by_apparences = sorted(dict_list.items(), key=operator.itemgetter(1), reverse=True)
@@ -119,6 +118,4 @@ class Seq:
         for k,v in d.items():
             d[k] = [v, round(((v * 100) / total), 1)]
         return d
-        # el resultado tiene esta forma-->  {'A': [1, 10.0], 'C': [2, 20.0], 'T': [3, 30.0], 'G': [4, 40.0]}
-        # la primera cifra son el numero de bases y la segunda el percentage
 

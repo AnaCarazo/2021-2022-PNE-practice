@@ -1,6 +1,7 @@
 import http.client
 import json
 from Seq1 import Seq
+import termcolor
 
 genes_dict = {"SRCAP": "ENSG00000080603",
               "FRAT1": "ENSG00000165879",
@@ -19,11 +20,10 @@ cont_loop = True
 while cont_loop:
     gene_name = input("Write the gene name: ")
     if gene_name in genes:
-        print("Gene: ", gene_name)
         ID = genes_dict[gene_name]
         cont_loop = False
     else:
-        print("The name was not found in the dictionary.")
+        print("The name was not found in the dictionary, try again.")
 
 SERVER = "rest.ensembl.org"
 ENDPOINT = "/sequence/id/" + ID #este es el que va a ir cambiando
@@ -47,15 +47,19 @@ try:
     dict_ensemble = r1.read().decode("utf-8")
     dict_ensemble = json.loads(dict_ensemble) #si no te va a salir: STRING INDICES MUST BE INTEGERS, no se puede usar la notación para acceder a cosas de un diccionario en un string
     #print(dict_ensemble)
-
+    termcolor.cprint("Gene: ", 'green', end="")
+    print(gene_name)
     s = Seq(dict_ensemble['seq'])
-    print(f"Description: {dict_ensemble['desc']}")
-    print(f"\nTotal length: {len(dict_ensemble['seq'])}")
-    print(f"\nNumber of bases:")
+    termcolor.cprint("Description:", 'green', end="")
+    print(dict_ensemble['desc'])
+    termcolor.cprint("Total length: ", 'green', end="")
+    print(len(dict_ensemble['seq']))
+    termcolor.cprint("Number of bases and percentage:", 'green')
     list_basis = ["A", "C", "T", "G"]
-    dict_count = s.count()
-    for b in list_basis:
-        print(f"{b}: {dict_count[b]}")
+    list_count = s.count_base()
+    dict_bases_perc = s.bases_and_percentages()
+    for i, b in enumerate(list_basis):
+        print(f"{b}: {list_count[i]} ({list(dict_bases_perc.values())[i][1]}%)")
 
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")
