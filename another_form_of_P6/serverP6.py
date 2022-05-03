@@ -37,7 +37,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Read the index from the file
 
         url_path = urlparse(self.path)
-        print("The old path was:", self.path)
+        print("The old path2 was:", self.path)
         print("The new path is:", url_path.path)
         path = url_path.path
 
