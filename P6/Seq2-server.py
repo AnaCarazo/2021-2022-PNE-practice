@@ -50,19 +50,20 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # http://localhost:63342/operation?seq=AACC&operation=Info
         elif self.path.startswith("/operation?"):
             seq = self.path.split("?seq=")[1].split("&")[0]
-            if Seq0.valid_sequence(seq):
+            s = Seq0.Seq(seq)
+            if s.valid_sequence():
                 operation = self.path.split("&operation=")[1]
                 if operation == "Info":
                     list_basis = ["A", "C", "T", "G"]
                     length = f"Total length: {len(seq)}"
-                    d = Seq0.bases_and_percentages(seq)
+                    d = s.bases_and_percentages()
                     list_values = list(d.values())
                     result = length
                     for i in range(0, 4):
-                        result = result + f"'<br>'{list_basis[i]}: {list_values[i][0]} ({list_values[i][1]}%)"
+                        result = result + f"<br>{list_basis[i]}: {list_values[i][0]} ({list_values[i][1]}%)"
                 elif operation == "Comp":
                     #poner en una función
-                    result = Seq0.complementary_seq(seq)
+                    result = s.complementary_seq()
                 elif operation == "Rev":
                     result = seq[::-1]
                 contents = Path('operation.html').read_text().format(seq=seq, operation=operation, result=result)
@@ -75,7 +76,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Define the content-type header:
         self.send_header('Content-Type', 'text/html')
-        self.send_header('Content-Length', len(str.encode(contents)))
+        self.send_header('Content-Length', str(len(str.encode(contents))))
 
         # The header is finished
         self.end_headers()
