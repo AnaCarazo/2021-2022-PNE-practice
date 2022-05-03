@@ -66,7 +66,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             sequences = Path("./sequences" + gene_name + ".txt").read_text()
             contents = read_html_file(path[1:] + ".html").render(context={
                 "gene_name": gene_name,
-                "sequence": sequence})
+                "sequence": sequences})
 
         #OPERATION
         # http://localhost:63342/operation?seq=AACC&operation=Info
