@@ -19,9 +19,6 @@ def read_html_file(filename):
     contents = j.Template(contents)
     return contents
 
-LIST_SEQUENCES = ["ACTG", "AACCTTGG", "AAACCCTTTGGG", "GTCA", "GGCCTTAA"]
-LIST_GENES = ["ADA", "FRAT1", "FXN", "RNU5A", "U5"]
-
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -44,50 +41,17 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         arguments = parse_qs(url_path.query)
         print("arguments", arguments)
 
-        if self.path == "/":
-            #con este método podríamos añadir otra sequence a LIST_SEQUENCES y seguiría funcionando igual
-            contents = read_html_file('html/index.html')\
-                .render(context={"n_sequence": len(LIST_SEQUENCES),
-                                 "genes": LIST_GENES})
-        #PING
-        elif path == "/ping":
-            contents = read_html_file(path[1:]).render()
+        if path == "/":
+            contents = Path('html/form.html').read_text()
 
-        #GET
-        elif path == "/get":
-            n_sequence = int(arguments["n_sequence"][0]) #hay que poner [0]
-            sequence = LIST_SEQUENCES[n_sequence]
-            contents = read_html_file(path[1:] + ".html").render(context={
-                "n_sequence": n_sequence,
-                "sequence": sequence})
-        #GENE
-        elif path == "/gene":
-            gene_name = arguments["gene_name"][0]
-            sequences = Path("./sequences" + gene_name + ".txt").read_text()
-            contents = read_html_file(path[1:] + ".html").render(context={
-                "gene_name": gene_name,
-                "sequence": sequences})
+        if path == "/listSpecies":
+            list_sequences = ["cat", "dog", "human"]
+            contents = read_html_file('html/index.html') \
+                .render(context={"list_sequences": list_sequences})
 
-        #OPERATION
-        # http://localhost:63342/operation?seq=AACC&operation=Info
-        elif path == "/operation":
-            sequence = arguments["sequence"][0]
-            operation = arguments["operation"][0]
-            if operation == "Info":
-                pass
-                #result = #seq.info() hay que llamar a las correspondientes funciones
-                         #pero dnd están estas funciones? Esto ya está dentro de una clase
-            elif operation == "Comp":
-                pass
-            elif operation == "Rev":
-                contents = read_html_file(path[1:] + ".html").render(context={
-                    #cambiar estos
-                    "n_sequence": n_sequence,
-                    "sequence": sequence})
-
-            contents = Path('html/operation.html').read_text().format(seq=seq, operation=operation, result=result)
         else:
-            contents = Path('html/Error.html').read_text()
+            contents = Path('html/error.html').read_text()
+
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
 
