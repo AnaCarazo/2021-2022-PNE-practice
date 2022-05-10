@@ -5,10 +5,12 @@
     <title>Final project</title>
   </head>
   <body>
-    <h1>List of species requested:</h1>
-    {% for specie in context.list_species %}
-    <p>{{specie}}</p>
-    {% endfor %}
+    <h1>Karyotype of the specie selected:</h1>
+    <p>
+      {% for karyotype in context.list_karyotype %}
+        {{karyotype}},
+      {% endfor %}
+    </p>
     <a href="/">Main page</a>
   </body>
 </html>

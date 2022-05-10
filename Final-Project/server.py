@@ -1,13 +1,34 @@
+#para la medium part se puede usar mucho la description
+
 import http.server
 import socketserver
 import termcolor
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 import jinja2 as j
+import json
 
 # Define the Server's port
 PORT = 8080
 
+def make_request(endpoint, params=""):
+    SERVER = "rest.ensembl.org"
+    PARAMETERS = "?content-type=application/json"
+    conn = http.client.HTTPConnection(SERVER)
+    try:
+        conn.request("GET", endpoint + PARAMETERS + params) #we don't need to put the server when requesting connection
+        # -- Read the response message from the server
+        r1 = conn.getresponse()
+
+        # -- Print the status line
+        print(f"Response received!: {r1.status} {r1.reason}\n")
+
+        # -- Read the response's body
+        data1 = r1.read().decode("utf-8")
+        return json.loads(data1)
+    except ConnectionRefusedError:
+        print("ERROR! Cannot connect to the Server")
+        exit()
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
@@ -44,11 +65,38 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         if path == "/":
             contents = Path('html/form.html').read_text()
 
-        if path == "/listSpecies":
-            list_sequences = ["cat", "dog", "human"]
-            contents = read_html_file('html/index.html') \
-                .render(context={"list_sequences": list_sequences})
+        elif path == "/listSpecies":
+            list_species = []
+            answer_ensemble = make_request("/info/species")
+            limit = int(arguments["limit"][0])
+            for i in range(limit):
+                list_species.append(answer_ensemble["species"][i]["common_name"])
+            contents = read_html_file('listSpecies.html') \
+                .render(context={"list_species": list_species}) #la key de este dict es la que tiene que aparecer en el jinja
 
+        elif path == "/karyotype":
+            specie = arguments["specie"][0]
+            answer_ensemble = make_request("/info/assembly/" + specie)
+            print(answer_ensemble["karyotype"])
+            contents = read_html_file('karyotype.html') \
+                .render(context={"list_karyotype": answer_ensemble["karyotype"]})
+
+        elif path == "/chromosomeLength":
+            specie = arguments["specie"][0]
+            answer_ensemble = make_request("/info/assembly/" + specie)
+            chromosome = arguments["chromo"][0]
+            #todo  hacerlo un while loop
+            for d in answer_ensemble["top_level_region"]: #esto es una lista de dicccionarios
+                if d["coord_system"] == "chromosome" and d["name"] == chromosome:
+                    length = d["length"]
+            contents = read_html_file('lengthChromosome.html') \
+                .render(context={"length": length})
+
+
+        #elif path == "/geneSeq":      esto es para el medium
+            #    gene = int(arguments["gene"][0])
+            #    params = "&species=human"
+        #    answer_ensembl = make_request("/sequence/id/" + gene, params)
         else:
             contents = Path('html/error.html').read_text()
 
