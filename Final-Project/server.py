@@ -68,7 +68,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif path == "/listSpecies":
             list_species = []
             answer_ensemble = make_request("/info/species")
-            limit = int(arguments["limit"][0])
+            limit = int(arguments["limit"][0]) #ValueError
             for i in range(limit):
                 list_species.append(answer_ensemble["species"][i]["common_name"])
             contents = read_html_file('listSpecies.html') \
