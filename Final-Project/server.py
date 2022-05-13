@@ -68,29 +68,52 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         elif path == "/listSpecies":
             list_species = []
             answer_ensemble = make_request("/info/species")
-            limit = int(arguments["limit"][0]) #ValueError
-            for i in range(limit):
-                list_species.append(answer_ensemble["species"][i]["common_name"])
-            contents = read_html_file('listSpecies.html') \
-                .render(context={"list_species": list_species}) #la key de este dict es la que tiene que aparecer en el jinja
+            limit = arguments["limit"][0]
+            print("limit:", limit, "Is digit?:", limit.isdigit())
+            if limit.isdigit() and 0 < int(limit) < 312:
+                limit = int(limit)
+                for i in range(limit):
+                    list_species.append(answer_ensemble["species"][i]["common_name"])
+                contents = read_html_file('listSpecies.html') \
+                    .render(context={"list_species": list_species}) #la key de este dict es la que tiene que aparecer en el jinja
+            else: #the limit introduced is not an integer number in the interval between 0  and 311 (included)
+                message = "The limit introduced is not an integer number in the interval between 0  and 311 (included)"
+                contents = Path('html/error.html') \
+                    .render(context={"error_message": message})
 
-        elif path == "/karyotype":
-            specie = arguments["specie"][0]
-            answer_ensemble = make_request("/info/assembly/" + specie)
-            print(answer_ensemble["karyotype"])
-            contents = read_html_file('karyotype.html') \
-                .render(context={"list_karyotype": answer_ensemble["karyotype"]})
+        elif path == "/karyotype": #creo que me está sacando el mismo kariotipo para todas las especies
+            specie = arguments["specie"][0].replace(" ", "_")
+            try:
+                answer_ensemble = make_request("/info/assembly/" + specie)
+                print(answer_ensemble["karyotype"])
+                contents = read_html_file('karyotype.html') \
+                    .render(context={"list_karyotype": answer_ensemble["karyotype"]})
+            except KeyError:
+                message = "The specie selected was not found in the data base."
+                contents = Path('html/error.html') \
+                    .render(context={"error_message": message})
+
 
         elif path == "/chromosomeLength":
-            specie = arguments["specie"][0]
-            answer_ensemble = make_request("/info/assembly/" + specie)
-            chromosome = arguments["chromo"][0]
-            #todo  hacerlo un while loop
-            for d in answer_ensemble["top_level_region"]: #esto es una lista de dicccionarios
-                if d["coord_system"] == "chromosome" and d["name"] == chromosome:
-                    length = d["length"]
-            contents = read_html_file('lengthChromosome.html') \
-                .render(context={"length": length})
+            specie = arguments["specie"][0].replace(" ", "_")
+            try:
+                answer_ensemble = make_request("/info/assembly/" + specie)
+                chromosome = arguments["chromo"][0]
+                if chromosome in answer_ensemble["karyotype"]:
+                    #todo  hacerlo un while loop
+                    for d in answer_ensemble["top_level_region"]: #esto es una lista de dicccionarios
+                        if d["coord_system"] == "chromosome" and d["name"] == chromosome:
+                            length = d["length"]
+                    contents = read_html_file('lengthChromosome.html') \
+                        .render(context={"length": length})
+                else:
+                    message = "The chromosome selected does not belong to the specie selected."
+                    contents = Path('html/error.html') \
+                        .render(context={"error_message": message})
+            except KeyError:
+                message = "The specie selected was not found in the data base."
+                contents = Path('html/error.html') \
+                    .render(context={"error_message": message})
 
 
         #elif path == "/geneSeq":      esto es para el medium
@@ -98,7 +121,9 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             #    params = "&species=human"
         #    answer_ensembl = make_request("/sequence/id/" + gene, params)
         else:
-            contents = Path('html/error.html').read_text()
+            message = "Resource not found."
+            contents = Path('html/error.html').read_text() \
+                    .render(context={"error_message": message})
 
         # Generating the response message
         self.send_response(200)  # -- Status line: OK!
