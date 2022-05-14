@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Final project</title>
+  </head>
+  <body style="background-color: #bdd9d7;">
+    <h1>List of species requested:</h1>
+    {% for specie in context.list_species %}
+    <p>{{specie}}</p>
+    {% endfor %}
+    <a href="/">Main page</a>
+  </body>
+</html>
