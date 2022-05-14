@@ -33,8 +33,10 @@ def make_request(endpoint, params=""):
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
 
-#creamos esta función que vamos a usar mucho a lo largo del código
+#cuando pongamos la dirección de los html no hace falta poner esto delante para indicar a qué directory pertenece, xq ya lo estamos incluyendo con esta variable
 HTML_FOLDER = "./html/"
+
+#creamos esta función que vamos a usar mucho a lo largo del código
 def read_html_file(filename):
     contents = Path(HTML_FOLDER + filename).read_text()
     contents = j.Template(contents)
@@ -77,10 +79,10 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = read_html_file('listSpecies.html') \
                     .render(context={"list_species": list_species}) #la key de este dict es la que tiene que aparecer en el jinja
             else:
-                contents = Path('html/try.html').read_text()
-                #message = "The limit introduced is not an integer number in the interval between 0  and 311 (included)"
-                #contents = Path('html/error.html') \
-                #    .render(context={"error_message": message})
+                #contents = Path('html/try.html').read_text()
+                message = "The limit introduced is not an integer number in the interval between 0  and 311 (included)"
+                contents = read_html_file('error.html') \
+                    .render(context={"error_message": message})
 
         elif path == "/karyotype": #creo que me está sacando el mismo kariotipo para todas las especies
             specie = arguments["specie"][0].replace(" ", "_")
@@ -91,7 +93,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     .render(context={"list_karyotype": answer_ensemble["karyotype"]})
             except KeyError:
                 message = "The specie selected was not found in the data base."
-                contents = Path('html/error.html') \
+                contents = read_html_file('error.html') \
                     .render(context={"error_message": message})
 
 
@@ -105,15 +107,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     for d in answer_ensemble["top_level_region"]: #esto es una lista de dicccionarios
                         if d["coord_system"] == "chromosome" and d["name"] == chromosome:
                             length = d["length"]
-                    contents = read_html_file('lengthChromosome.html') \
-                        .render(context={"length": length})
+                            contents = read_html_file('lengthChromosome.html') \
+                                .render(context={"length": length})
                 else:
                     message = "The chromosome selected does not belong to the specie selected."
-                    contents = Path('html/error.html') \
+                    contents = read_html_file('error.html') \
                         .render(context={"error_message": message})
             except KeyError:
                 message = "The specie selected was not found in the data base."
-                contents = Path('html/error.html') \
+                contents = read_html_file('error.html') \
                     .render(context={"error_message": message})
 
 
@@ -123,7 +125,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         #    answer_ensembl = make_request("/sequence/id/" + gene, params)
         else:
             message = "Resource not found."
-            contents = Path('html/error.html').read_text() \
+            contents = read_html_file('error.html').read_text() \
                     .render(context={"error_message": message})
 
         # Generating the response message
