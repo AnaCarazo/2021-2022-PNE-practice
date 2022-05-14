@@ -76,10 +76,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     list_species.append(answer_ensemble["species"][i]["common_name"])
                 contents = read_html_file('listSpecies.html') \
                     .render(context={"list_species": list_species}) #la key de este dict es la que tiene que aparecer en el jinja
-            else: #the limit introduced is not an integer number in the interval between 0  and 311 (included)
-                message = "The limit introduced is not an integer number in the interval between 0  and 311 (included)"
-                contents = Path('html/error.html') \
-                    .render(context={"error_message": message})
+            else:
+                contents = Path('html/try.html').read_text()
+                #message = "The limit introduced is not an integer number in the interval between 0  and 311 (included)"
+                #contents = Path('html/error.html') \
+                #    .render(context={"error_message": message})
 
         elif path == "/karyotype": #creo que me está sacando el mismo kariotipo para todas las especies
             specie = arguments["specie"][0].replace(" ", "_")
