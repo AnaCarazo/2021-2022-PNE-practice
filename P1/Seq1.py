@@ -26,7 +26,6 @@ class Seq:
 
     def __str__(self): # si no  ponemos esto se imprime cómo está guardado en la memoria, pero no como un string
         """Method called when the object is being printed"""
-
         # -- We just return the string with the sequence
         return self.strbases
 

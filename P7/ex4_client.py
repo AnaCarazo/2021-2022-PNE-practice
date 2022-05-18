@@ -26,7 +26,7 @@ while cont_loop:
         print("The name was not found in the dictionary, try again.")
 
 SERVER = "rest.ensembl.org"
-ENDPOINT = "/sequence/id/" + ID #este es el que va a ir cambiando
+ENDPOINT = "/sequence/id/" + ID #añadimos el stable identifier del gene que hemos metido
 PARAMETERS = "?content-type=application/json"
 URL = SERVER + ENDPOINT + PARAMETERS
 print()

@@ -1,6 +1,3 @@
-import http.client
-import json
-
 genes_dict = {"SRCAP": "ENSG00000080603",
               "FRAT1": "ENSG00000165879",
              "ADA": "ENSG00000196839",

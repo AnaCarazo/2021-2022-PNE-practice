@@ -71,7 +71,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             list_species = []
             answer_ensemble = make_request("/info/species")
             limit = arguments["limit"][0]
-            print("limit:", limit, "Is digit?:", limit.isdigit())
+            #print("limit:", limit, "Is digit?:", limit.isdigit())
             if limit.isdigit() and 0 < int(limit) < 312:
                 limit = int(limit)
                 for i in range(limit):
@@ -125,7 +125,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         #    answer_ensembl = make_request("/sequence/id/" + gene, params)
         else:
             message = "Resource not found."
-            contents = read_html_file('error.html').read_text() \
+            contents = read_html_file('error.html') \
                     .render(context={"error_message": message})
 
         # Generating the response message

@@ -22,6 +22,7 @@ try:
     # -- Read the response's body
     dict_ensemble = r1.read().decode("utf-8")
     dict_ensemble = json.loads(dict_ensemble) #si no te va a salir: STRING INDICES MUST BE INTEGERS, no se puede usar la notación para acceder a cosas de un diccionario en un string
+    #print(dict_ensemble)
     print(f"Gene: MIR633 \nDescription: {dict_ensemble['desc']} \nBases: {dict_ensemble['seq']}")
 except ConnectionRefusedError:
     print("ERROR! Cannot connect to the Server")

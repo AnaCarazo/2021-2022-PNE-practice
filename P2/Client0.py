@@ -11,6 +11,7 @@ class Client:
     def __str__(self): # si no  ponemos esto se imprime cómo está guardado en la memoria, pero no como un string
         return f"Connection to SERVER at {self.ip} PORT: {str(self.port)}"
         #No real connection has been established yet. It just prints the IP and port of the Client object
+
     def talk(self, msg):
         # -- Create the socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

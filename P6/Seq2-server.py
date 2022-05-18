@@ -2,7 +2,7 @@ import http.server
 import socketserver
 import termcolor
 from pathlib import Path
-import Seq0
+from Seq0 import Seq
 #estos dos módulos son mejores opciones para desarollar la práctica
 #from urllib.parse import urlparse, parse_qs
 #from jinja2 import Template
@@ -27,6 +27,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # Print the request line
         termcolor.cprint(self.requestline, 'green')
+        # Print the path
+        termcolor.cprint(self.path, 'blue')
 
         # Open the form1.html file
         # Read the index from the file
@@ -44,13 +46,15 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         #GENE
         elif self.path.startswith("/gene?"):
             name = self.path.split("?name=")[1]
-            gene_seq = Seq0.seq_read_fasta(name)
+            seq_name = Seq()
+            gene_seq = seq_name.seq_read_fasta(name)
+            print(gene_seq)
             contents = Path('gene.html').read_text().format(name, gene_seq)
         #OPERATION
         # http://localhost:63342/operation?seq=AACC&operation=Info
         elif self.path.startswith("/operation?"):
             seq = self.path.split("?seq=")[1].split("&")[0]
-            s = Seq0.Seq(seq)
+            s = Seq(seq)
             if s.valid_sequence():
                 operation = self.path.split("&operation=")[1]
                 if operation == "Info":

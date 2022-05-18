@@ -1,5 +1,5 @@
 #urlparse, parse_qs to simplify the parsing of the URL
-
+from urllib.parse import urlparse, parse_qs
 URL = "http://localhost:63342/operation?seq=AACC&operation=Info"
 part = parse_qs(URL)[0]
 
