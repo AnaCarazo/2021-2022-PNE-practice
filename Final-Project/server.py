@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 import jinja2 as j
 import json
+from Seq0 import Seq
 
 # Define the Server's port
 PORT = 8080
@@ -42,6 +43,19 @@ def read_html_file(filename):
     contents = j.Template(contents)
     return contents
 
+#para el medium level:
+genes_dict = {"SRCAP": "ENSG00000080603",
+              "FRAT1": "ENSG00000165879",
+              "ADA": "ENSG00000196839",
+              "FXN": "ENSG00000165060",
+              "RNU6_269P": "ENSG00000212379",
+              "MIR633": "ENSG00000207552",
+              "TTTY4C": "ENSG00000228296",
+              "RBMY2YP": "ENSG00000227633",
+              "FGFR3": "ENSG00000068078",
+              "KDR": "ENSG00000128052",
+              "ANK2": "ENSG00000145362"}
+
 # Class with our Handler. It is a called derived from BaseHTTPRequestHandler
 # It means that our class inheritates all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -62,7 +76,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         path = url_path.path
 
         arguments = parse_qs(url_path.query)
-        print("arguments", arguments)
+        print("arguments:", arguments)
 
         if path == "/":
             contents = Path('html/form.html').read_text()
@@ -117,15 +131,94 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 message = "The specie selected was not found in the data base."
                 contents = read_html_file('error.html') \
                     .render(context={"error_message": message})
+        #esto es para el medium
 
+        elif path == "/geneSeq":
+            gene = arguments["gene1"][0]
+            params = "&species=human"
+            genes = genes_dict.keys()
+            print(genes)
+            if gene in genes:
+                ID = genes_dict[gene]
+                #print("ID:", ID)
+                answer_ensembl = make_request("/sequence/id/" + ID, params)
+                #print(answer_ensembl)
+                sequence = answer_ensembl['seq']
+                #print("Sequence:", sequence)
+                contents = read_html_file('geneSeq.html') \
+                    .render(context={"sequence": sequence})
+            else:
+                message = "The name was not found in the dictionary, try again."
+                contents = read_html_file('error.html') \
+                    .render(context={"error_message": message})
 
-        #elif path == "/geneSeq":      esto es para el medium
-            #    gene = int(arguments["gene"][0])
-            #    params = "&species=human"
-        #    answer_ensembl = make_request("/sequence/id/" + gene, params)
+        elif path == "/geneInfo":
+            gene = arguments["gene2"][0]
+            params = "&species=human"
+            genes = genes_dict.keys()
+            print(genes)
+            if gene in genes:
+                ID = genes_dict[gene]
+                print("ID:", ID)
+                answer_ensembl = make_request("/sequence/id/" + ID, params)
+                print(answer_ensembl)
+                print(answer_ensembl.keys())
+                start = answer_ensembl['desc'].split(":")[3]
+                end = answer_ensembl['desc'].split(":")[4]
+                chromosome = answer_ensembl['desc'].split(":")[1]
+                length = int(end)-int(start)
+                print("start:", start, "end:", end, "Length:", int(end)-int(start), "id:", ID, "Chromosome name:")
+                contents = read_html_file('geneInfo.html') \
+                    .render(context={"start": start, "end": end, "ID": ID, "length": length, "chromosome_name": chromosome})
+            else:
+                message = "The name was not found in the dictionary, try again."
+                contents = read_html_file('error.html') \
+                    .render(context={"error_message": message})
+
+        elif path == "/geneCalc":
+            gene = arguments["gene3"][0]
+            params = "&species=human"
+            genes = genes_dict.keys()
+            print(genes)
+            if gene in genes:
+                ID = genes_dict[gene]
+                print("ID:", ID)
+                answer_ensembl = make_request("/sequence/id/" + ID, params)
+                print(answer_ensembl)
+                print(answer_ensembl.keys())
+                sequence = answer_ensembl['seq']
+                s = Seq(sequence)
+                length = s.len()
+                dict_bases_perc = s.bases_and_percentages()
+                bases = dict_bases_perc.keys()
+                list_info = []
+                for i, b in enumerate(bases):
+                    list_info.append(f"{b}: {list(dict_bases_perc.values())[i][0]} ({list(dict_bases_perc.values())[i][1]}%)")
+                contents = read_html_file('geneCalc.html') \
+                    .render(context={"length": length, "list_info": list_info})
+            #/phenotype/region/homo_sapiens/9:22125500-22136000?feature_type=Variation;content-type=application/json
+        elif path == "/geneList":
+            print("geneList")
+            chromo = arguments["chromosome"][0]
+            start = arguments["start"][0]
+            end = arguments["end"][0]
+            answer_ensemble = make_request(f"/phenotype/region/homo_sapiens/{chromo}:{start}-{end}")
+            #print("ensemble request:")
+            #termcolor.cprint(answer_ensemble, "yellow")
+            list_gene = []
+            #comprobar que en la location que el chromosome y el start y end son los que pide el user
+            #si coinciden entonces hacemos un append a list_gene, que es lo que vamos a pasar al html
+            for e in answer_ensemble:
+                list_dicts = e['phenotype_associations']
+                print(list_dicts) #esto es una lista de diccionarios
+                for d in list_dicts:
+                    print(d["attributes"])
+
+            contents = read_html_file('geneList.html')
+
         else:
             message = "Resource not found."
-            contents = read_html_file('error.html').read_text() \
+            contents = read_html_file('error.html') \
                     .render(context={"error_message": message})
 
         # Generating the response message

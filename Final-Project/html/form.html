@@ -6,7 +6,7 @@
   </head>
   <body style="background-color: #bdd9d7;">
     <h1>Browsing Human and Vertebrates genome</h1>
-    <h2>Basic level services</h2>
+    <h2>Medium level services</h2>
     <p>1) List of species in the genome database</p>
     <form action="/listSpecies" method="get">
       Limit:
@@ -42,10 +42,32 @@
       <input type="submit" value="Send"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
     </form>
     <br>
-    <p>4) Introduce a human gene. The following information will be printed: start, end, Length, id and Chromosome name</p>
+    <p>5) Introduce a human gene. The following information will be printed: start, end, Length, id and Chromosome name</p>
     <form action="/geneInfo" method="get">
       Human gene:
       <input type="text" name="gene2">
+      <br>
+      <input type="submit" value="Send"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
+    </form>
+    <br>
+    <p>6) Introduce a human gene. The total length and the percentage of all its bases will be shown.</p>
+    <form action="/geneCalc" method="get">
+      Human gene:
+      <input type="text" name="gene3">
+      <br>
+      <input type="submit" value="Send"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
+    </form>
+    <br>
+    <p>7) Genes in a chromosome from the homo_sapiens:</p>
+    <form action="/geneList" method="get">
+      Select the chromosome:
+      <input type="text" name="chromosome">
+      <br>
+      Select the start position:
+      <input type="text" name="start">
+      <br>
+      Select the end position:
+      <input type="text" name="end">
       <br>
       <input type="submit" value="Send"> <!--la cajita para enviar la información, con esto pongo el texto que quiero que salga en la cajita de enviar: value="SEND" -->
     </form>

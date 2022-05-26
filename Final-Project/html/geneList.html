@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Final project</title>
+  </head>
+  <body style="background-color: #bdd9d7;">
+    <h1>Genes located in the chromosome from the start to end positions:</h1>
+    <p>
+      {% for gene in context.list_gene %}
+        {{gene}},
+      {% endfor %}
+    </p>
+    <a href="/">Main page</a>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-from Seq0 import *
+from Seq0 import Seq
 
 seq1 = "ATTCCCGGGG"
 

@@ -46,7 +46,7 @@ try:
     # -- Read the response's body
     dict_ensemble = r1.read().decode("utf-8")
     dict_ensemble = json.loads(dict_ensemble) #si no te va a salir: STRING INDICES MUST BE INTEGERS, no se puede usar la notación para acceder a cosas de un diccionario en un string
-    #print(dict_ensemble)
+    print(dict_ensemble)
     termcolor.cprint("Gene: ", 'green', end="")
     print(gene_name)
     s = Seq(dict_ensemble['seq'])
